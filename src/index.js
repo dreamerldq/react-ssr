@@ -3,6 +3,7 @@ import React from 'react'
 import Home from './containers/Home'
 import { renderToString } from 'react-dom/server'
 const app = express()
+app.use(express.static('public')) // 当请求静态文件的时候，就在跟目录下的public中去找
 const content = renderToString(<Home/>)
 // 客户端渲染
 // React代码在浏览器中执行，消耗的是用户浏览器的性能
@@ -17,7 +18,10 @@ app.get('/', (req,res) => {
            </title>
        </head>
        <body>
-           ${content}
+          <div id="root">
+          ${content}
+          </div>
+           <script src="./index.js"></script>
        </body>
    </html>
   `)

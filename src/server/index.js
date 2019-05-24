@@ -1,6 +1,6 @@
 import express from 'express'
 import React from 'react'
-import Home from './containers/Home'
+import Home from '../containers/Home'
 import { renderToString } from 'react-dom/server'
 const app = express()
 app.use(express.static('public')) // 当请求静态文件的时候，就在跟目录下的public中去找
@@ -18,9 +18,7 @@ app.get('/', (req,res) => {
            </title>
        </head>
        <body>
-          <div id="root">
-          ${content}
-          </div>
+           <div id="root">${content}</div>
            <script src="./index.js"></script>
        </body>
    </html>

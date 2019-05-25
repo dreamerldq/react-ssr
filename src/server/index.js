@@ -1,5 +1,7 @@
 import express from 'express'
 import { render } from './utils'
+
+
 const app = express()
 app.use(express.static('public')) // 当请求静态文件的时候，就在跟目录下的public中去找
 

@@ -25,7 +25,9 @@ class Home extends React.Component {
         )
     }
     componentDidMount(){ //在服务器端不会执行
-        this.props.getNewsList()
+       if(!this.props.list.length){
+         this.props.getNewsList()
+       }
     }
     
 }

@@ -4,7 +4,10 @@ import { reducer as homeReducer} from '../containers/Home/store'
 const reducer = combineReducers({
     home: homeReducer
 })
-const getStore = () => {
+export const getStore = () => {
     return createStore(reducer,applyMiddleware(thunk));
 }
-export default getStore
+export const getClientStore = () => {
+    const initState = window.context.state
+    return createStore(reducer, initState, applyMiddleware(thunk));
+}

@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route,Switch } from 'react-router-dom'
 import ReactDom from 'react-dom'
 import routes from '../Routes'
 import { Provider } from 'react-redux'
-import getStore from '../store/index'
-const store = getStore()
+import { getClientStore } from '../store/index'
+const store = getClientStore()
 
 const App = () => {
     return(

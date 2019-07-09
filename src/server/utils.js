@@ -3,7 +3,7 @@ import { matchRoutes } from 'react-router-config'
 import { renderToString } from 'react-dom/server'
 import React from 'react'
 import { Provider } from 'react-redux'
-import getStore from '../store/index'
+import { getStore } from '../store/index'
 import routes from '../Routes'
 
 
@@ -47,6 +47,11 @@ export const render = (req,res) => {
            </head>
            <body>
                <div id="root">${content}</div>
+               <script>
+                    window.context = {
+                        state: ${JSON.stringify(store.getState())}
+                    }
+               </script>
                <script src="./index.js"></script>
            </body>
        </html>`

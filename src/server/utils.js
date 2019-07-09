@@ -1,17 +1,33 @@
-import {StaticRouter, Router} from 'react-router-dom'
+import { StaticRouter, Router,Switch, Route } from 'react-router-dom'
+import { matchRoutes } from 'react-router-config'
 import { renderToString } from 'react-dom/server'
-import Routes from '../Routes'
 import React from 'react'
 import { Provider } from 'react-redux'
 import getStore from '../store/index'
+import routes from '../Routes'
 
 
 export const render = (req) => {
+    // store里面到底填充什么，我们需要结合用户请求地址和路由来做判断，如果用户访问/路径，我们就拿Home组件的数据
     const store = getStore()
+//    routes.some((route) => {
+//        const match = matchRoutes(req.path, route)
+//        if(match){
+//         matched.push(route)
+//        }
+//    }) 
+const matched = matchRoutes(routes, req.path)
+    console.log(matched)
     const content = renderToString(
         <Provider store={store}>
             <StaticRouter location={req.path} context={{}}>
-            {Routes}
+            <Switch>
+                {
+                    routes.map((route) =>{
+                       return <Route {...route}></Route>
+                    })
+                }
+            </Switch>
         </StaticRouter>
         </Provider>
     )
@@ -21,6 +37,8 @@ export const render = (req) => {
            <title>
                SSR
            </title>
+           <meta name="keywords" content="SSR Demo">
+           <meta name="description" content="SSR">
        </head>
        <body>
            <div id="root">${content}</div>

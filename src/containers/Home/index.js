@@ -9,6 +9,7 @@ class Home extends React.Component {
         return(
             <div>
                 <Header></Header>
+                <h1>这是首页</h1>
                 <div>{this.props.name }</div>
                 <ul>
                 {
@@ -27,6 +28,9 @@ class Home extends React.Component {
         this.props.getNewsList()
     }
     
+}
+Home.LoadData = () =>{
+    //这个函数负责在服务器端渲染之前，把这个组件需要用到的数据提前加载好
 }
 const mapStateToProps = (state) => {
     return{

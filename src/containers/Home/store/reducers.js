@@ -1,7 +1,6 @@
 import {GET_NEWSLIST} from './contents'
 const defaultState  = {
-    newsList: [],
-    name: 'lidanqiu'
+    newsList: []
 }
 const reducer = (state = defaultState, action) => {
     switch(action.type){

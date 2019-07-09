@@ -29,8 +29,9 @@ class Home extends React.Component {
     }
     
 }
-Home.LoadData = () =>{
+Home.loadData = (store) => {
     //这个函数负责在服务器端渲染之前，把这个组件需要用到的数据提前加载好
+   return  store.dispatch(getNewsList())
 }
 const mapStateToProps = (state) => {
     return{

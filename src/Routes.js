@@ -12,17 +12,9 @@ export default [
     {
         path:'/',
         component:Home,
-        // exect: true,
-        loadData: () => Home.loadData,
-        key:"Home",
-        routes:[
-            {
-                path: '/ttt',
-                component: Login,
-                exect: true,
-                key: 'ttt'
-            }
-        ],
+        exect: true,
+        loadData: Home.loadData ,
+        key:"Home"
        
     }
 

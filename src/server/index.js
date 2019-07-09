@@ -10,7 +10,7 @@ app.use(express.static('public')) // 当请求静态文件的时候，就在跟�
 // 客户端渲染
 // React代码在服务器上执行，消耗的是服务器端的性能
 app.get('*', (req,res) => {
-    res.send(render(req))
+    render(req,res)
   
 })
 app.listen(3000)

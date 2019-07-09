@@ -9,12 +9,10 @@ const changeList = (list) => {
 }
 const getNewsList = () => {
     return (dispatch) => {
-
-        axios.get('http://127.0.0.1:4000/api/news.json')
+      return  axios.get('http://127.0.0.1:4000/api/news.json')
             .then(({ data }) => {
                 dispatch(changeList(data ))
             })
-
     }
 }
 export { getNewsList }

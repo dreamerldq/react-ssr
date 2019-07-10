@@ -10,6 +10,8 @@ export const getStore = () => {
     return createStore(reducer,applyMiddleware(thunk.withExtraArgument(serverAxios)));
 }
 export const getClientStore = () => {
-    const initState = window.context.state
-    return createStore(reducer, initState, applyMiddleware(thunk.withExtraArgument(clientAxios)));
+    // const initState = window.context.state
+    const hydratedEl = document.getElementById('SSR_HYDRATED_DATA')
+    const hydrateData = JSON.parse(hydratedEl.textContent)
+    return createStore(reducer, hydrateData, applyMiddleware(thunk.withExtraArgument(clientAxios)));
 }

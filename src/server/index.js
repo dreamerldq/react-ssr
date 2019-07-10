@@ -1,21 +1,53 @@
 import express from 'express'
 import { render } from './utils'
 import proxy  from 'express-http-proxy'
+import { getStore } from '../store/index'
+import routes from '../Routes'
+import { matchRoutes } from 'react-router-config'
+import React from 'react'
+import { StaticRouter, Router,Switch, Route } from 'react-router-dom'
+
+import { renderToString } from 'react-dom/server'
+import { Provider } from 'react-redux'
+
+
 
 const app = express()
 app.use(express.static('public')) // 当请求静态文件的时候，就在跟目录下的public中去找
 app.use('/api', proxy('http://localhost:4000', {
     proxyReqPathResolver:function(req){
-        console.log("QQQ", req.url)
         return `/api${req.url}`
     }
   }));
-// 客户端渲染
-// React代码在浏览器中执行，消耗的是用户浏览器的性能
-// 客户端渲染
-// React代码在服务器上执行，消耗的是服务器端的性能
+  
+
 app.get('*', (req,res) => {
-    render(req,res)
+    const store = getStore()
+    const matched = matchRoutes(routes, req.path)
+    const promises = []
+    matched.forEach(item => {
+        if(item.route.loadData)
+        promises.push(item.route.loadData(store))
+    });
+    Promise.all(promises).then(() =>{
+        const content = renderToString(
+            <Provider store={store}>
+                <StaticRouter location={req.path} context={{}}>
+                <Switch>
+                    {
+                        routes.map((route) =>{
+                           return <Route {...route}></Route>
+                        })
+                    }
+                </Switch>
+            </StaticRouter>
+            </Provider>
+        )
+        render(res,store,content)
+    }
+   
+      )
+    
   
 })
 app.listen(3000)
